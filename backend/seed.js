@@ -4,7 +4,7 @@ import { connectDB } from "./config/db.js";
 import Category from "./models/Category.js";
 import Product from "./models/Product.js";
 import User from "./models/User.js";
-dotenv.config();
+dotenv.config();+
 await connectDB();
 const categories = [
   [
