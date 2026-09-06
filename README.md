@@ -7,7 +7,7 @@ Full-stack starter covering authentication, JWT, roles, products, categories, se
 cd backend
 npm install
 cp .env.example .env
-# edit .env if needed
+
 npm run dev
 ```
 API: http://localhost:5000
