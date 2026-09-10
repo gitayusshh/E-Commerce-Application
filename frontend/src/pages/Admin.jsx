@@ -90,7 +90,7 @@ export default function Admin() {
           <button onClick={() => del(p._id)}>Delete</button>
         </div>
       ))}
-      <h2>All Orders</h2>
+      {/* <h2>All Orders</h2>
       {orders.map((o) => (
         <div className="adminrow" key={o._id}>
           #{o._id.slice(-8)} — {o.user?.name} — ₹{o.totalAmount}
@@ -110,7 +110,7 @@ export default function Admin() {
             ))}
           </select>
         </div>
-      ))}
+      ))} */}
       <h2>Users</h2>
       {users.map((u) => (
         <div className="adminrow" key={u._id}>
