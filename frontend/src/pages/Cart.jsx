@@ -50,9 +50,18 @@ export default function Cart() {
           </div>
           <div className="summary">
             <h2>Total: ₹{total}</h2>
-            <button className="btn" onClick={() => nav("/checkout")}>
-              Checkout
-            </button>
+            <button
+  className="btn"
+  onClick={() => {
+    if (!user) {
+      nav("/login");
+    } else {
+      nav("/checkout");
+    }
+  }}
+>
+  Proceed to Checkout
+</button>
           </div>
         </>
       )}
