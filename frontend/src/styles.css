@@ -271,45 +271,57 @@ main {
   justify-content: center;
   align-items: center;
   padding: 40px 20px;
-  background: #f5f7fb;
+  background: linear-gradient(135deg, #f5f7fb 0%, #eef3ff 100%);
 }
 
 .payment-card {
-  width: 100%;
-  max-width: 450px;
+  width: min(100%, 450px);
   background: #ffffff;
-  border-radius: 20px;
-  padding: 30px;
+  border-radius: 22px;
+  padding: 30px 24px;
   text-align: center;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.payment-card > * {
+  width: 100%;
 }
 
 .payment-card h1 {
-  margin-bottom: 20px;
+  margin: 0;
   font-size: 28px;
 }
 
 .payment-card h2 {
-  margin: 20px 0;
+  margin: 8px 0 0;
   font-size: 24px;
 }
 
 .payment-card p {
   line-height: 1.6;
+  margin: 0;
 }
 
 .payment-qr {
-  width: 100%;
-  max-width: 320px;
+  width: min(100%, 320px);
+  height: auto;
   display: block;
-  margin: 20px auto;
+  margin: 8px auto 0;
   border-radius: 15px;
   border: 1px solid #e5e5e5;
+  background: #fff;
+  object-fit: contain;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
 }
 
 .payment-details {
+  width: 100%;
   text-align: left;
-  margin: 25px 0;
+  margin: 18px 0 0;
   padding: 18px;
   background: #f7f7f7;
   border-radius: 12px;
@@ -324,7 +336,7 @@ main {
 .demo-text {
   color: #666;
   font-size: 14px;
-  margin: 20px 0;
+  margin: 12px 0 0;
 }
 
 .payment-card .btn {
@@ -334,6 +346,7 @@ main {
   border-radius: 10px;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 14px;
 }
 
 .payment-card .btn:disabled {
@@ -351,7 +364,7 @@ main {
   }
 
   .payment-card {
-    padding: 20px;
+    padding: 20px 16px;
     border-radius: 15px;
   }
 
@@ -360,6 +373,6 @@ main {
   }
 
   .payment-qr {
-    max-width: 280px;
+    width: min(100%, 260px);
   }
 }
