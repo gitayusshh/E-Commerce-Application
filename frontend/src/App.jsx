@@ -7,6 +7,7 @@ import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
 import { Login, Register } from "./pages/Auth";
 import Cart from "./pages/Cart";
+import Payment from "./pages/Payment";
 import Checkout from "./pages/Checkout";
 import { Orders, OrderDetails } from "./pages/Orders";
 import Admin from "./pages/Admin";
@@ -47,6 +48,8 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/payment" element={<Payment />} />
+          
           <Route
             path="/admin"
             element={

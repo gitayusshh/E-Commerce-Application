@@ -263,3 +263,44 @@ main {
   letter-spacing: 0.08em;
   font-size: 0.8rem;
 }
+ 
+
+
+.payment-page {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-card {
+  width: 400px;
+  max-width: 90%;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  background: white;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+}
+
+.payment-card h1 {
+  margin-bottom: 20px;
+}
+
+.payment-card h2 {
+  margin: 20px 0;
+}
+
+.payment-details {
+  text-align: left;
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f5f5f5;
+}
+
+.demo-text {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 20px;
+}
