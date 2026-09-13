@@ -90,27 +90,104 @@ export default function Admin() {
           <button onClick={() => del(p._id)}>Delete</button>
         </div>
       ))}
-      {/* <h2>All Orders</h2>
+
+      <h2>Order Management</h2>
+
+      {orders.length === 0 && <p>No orders found.</p>}
+
+      {orders.map((o) => (
+        <div className="adminrow order-admin" key={o._id}>
+          <div>
+            <b>Order #{o._id.slice(-8)}</b>
+
+            <p>Name: {o.shippingAddress?.fullName}</p>
+
+            <p>Customer Name: {o.user?.name}</p>
+
+            <p>Amount: ₹{o.totalAmount}</p>
+
+            <p>Payment: {o.paymentMethod}</p>
+
+            <p>Payment Status: {o.paymentStatus}</p>
+
+            <p>
+              Current Status: <b>{o.status}</b>
+            </p>
+          </div>
+
+          <div className="order-actions">
+            {o.status === "Placed" && (
+              <button
+                className="btn"
+                onClick={() => status(o._id, "Processing")}
+              >
+                Start Processing
+              </button>
+            )}
+
+            {o.status === "Processing" && (
+              <button className="btn" onClick={() => status(o._id, "Shipped")}>
+                Mark as Shipped
+              </button>
+            )}
+
+            {o.status === "Shipped" && (
+              <button
+                className="btn"
+                onClick={() => status(o._id, "Out for Delivery")}
+              >
+                Out for Delivery
+              </button>
+            )}
+
+            {o.status === "Out for Delivery" && (
+              <button
+                className="btn"
+                onClick={() => status(o._id, "Delivered")}
+              >
+                Mark as Delivered
+              </button>
+            )}
+
+            {o.status === "Delivered" && (
+              <button className="btn" disabled>
+                ✓ Delivered
+              </button>
+            )}
+          </div>
+        </div>
+      ))}
+
+      <h2>All Orders</h2>
+
       {orders.map((o) => (
         <div className="adminrow" key={o._id}>
-          #{o._id.slice(-8)} — {o.user?.name} — ₹{o.totalAmount}
+          <div>
+            <b>Order #{o._id.slice(-8)}</b>
+
+            <p>Customer: {o.user?.name}</p>
+
+            <p>Amount: ₹{o.totalAmount}</p>
+
+            <p>
+              Current Status: <b>{o.status}</b>
+            </p>
+          </div>
+
           <select
             value={o.status}
             onChange={(e) => status(o._id, e.target.value)}
           >
-            {[
-              "Placed",
-              "Processing",
-              "Shipped",
-              "Out for Delivery",
-              "Delivered",
-              "Cancelled",
-            ].map((s) => (
-              <option key={s}>{s}</option>
-            ))}
+            <option value="Placed">Placed</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Out for Delivery">Out for Delivery</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
           </select>
         </div>
-      ))} */}
+      ))}
+
       <h2>Users</h2>
       {users.map((u) => (
         <div className="adminrow" key={u._id}>

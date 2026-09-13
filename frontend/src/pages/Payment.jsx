@@ -1,19 +1,16 @@
-
-// import { QRCodeSVG } from "qrcode.react";
 // import { useLocation, useNavigate } from "react-router-dom";
 // import { useState } from "react";
 // import api from "../services/api";
 // import { useCart } from "../context/CartContext";
-// import { QRCodeSVG } from "qrcode.react";
 
 // export default function Payment() {
 //   const location = useLocation();
 //   const nav = useNavigate();
-
 //   const { load } = useCart();
 
 //   const [loading, setLoading] = useState(false);
 //   const [success, setSuccess] = useState(false);
+
 //   const [paymentId] = useState(
 //     "PAY" + Date.now() + Math.floor(Math.random() * 1000)
 //   );
@@ -22,37 +19,28 @@
 
 //   if (!data) {
 //     return (
-//       <section className="auth">
-//         <h2>Invalid Payment Request</h2>
+//       <section className="payment-page">
+//         <div className="payment-card">
+//           <h2>Invalid Payment Request</h2>
+//         </div>
 //       </section>
 //     );
 //   }
 
-//   const {
-//     shippingAddress,
-//     paymentMethod,
-//     total,
-//   } = data;
+//   const { shippingAddress, paymentMethod, total } = data;
 
 //   const confirmPayment = async () => {
 //     setLoading(true);
 
 //     try {
-//       const paymentDetails =
-//         paymentMethod === "ONLINE"
-//           ? {
-//               paymentId,
-//               paymentStatus: "PAID",
-//               paidAt: new Date().toISOString(),
-//             }
-//           : {
-//               paymentStatus: "PENDING",
-//             };
-
 //       const r = await api.post("/orders", {
 //         shippingAddress,
 //         paymentMethod,
-//         paymentDetails,
+
+//         paymentId:
+//           paymentMethod === "ONLINE"
+//             ? paymentId
+//             : null,
 //       });
 
 //       setSuccess(true);
@@ -97,26 +85,19 @@
 
 //           <h2>Amount: ₹{total}</h2>
 
-//           <p>
-//             You will pay when your order is delivered.
-//           </p>
+//           <p>You will pay when your order is delivered.</p>
 
 //           <button
 //             className="btn"
 //             onClick={confirmPayment}
 //             disabled={loading}
 //           >
-//             {loading
-//               ? "Placing Order..."
-//               : "Confirm Order"}
+//             {loading ? "Placing Order..." : "Confirm Order"}
 //           </button>
 //         </div>
 //       </section>
 //     );
 //   }
-
-//   const upiData =
-//     `upi://pay?pa=ecommerce@upi&pn=E-Commerce Store&am=${total}&cu=INR`;
 
 //   return (
 //     <section className="payment-page">
@@ -124,22 +105,15 @@
 
 //         <h1>Scan & Pay</h1>
 
-//         <QRCodeSVG
-//           value={upiData}
-//           size={220}
+//         <img
+//           src="/payment-qr.jpeg"
+//           alt="UPI Payment QR Code"
+//           className="payment-qr"
 //         />
 
-//         <h2>₹{total}</h2>
+//         <h2>Amount: ₹{total}</h2>
 
 //         <div className="payment-details">
-//           <p>
-//             <b>Store:</b> E-Commerce Store
-//           </p>
-
-//           <p>
-//             <b>UPI ID:</b> ecommerce@upi
-//           </p>
-
 //           <p>
 //             <b>Customer:</b> {shippingAddress.fullName}
 //           </p>
@@ -150,7 +124,7 @@
 //         </div>
 
 //         <p className="demo-text">
-//           This is a demo payment system.
+//           Scan the QR code and complete your payment.
 //         </p>
 
 //         <button
@@ -166,11 +140,7 @@
 //       </div>
 //     </section>
 //   );
-
 // }
-
-
-
 
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -184,7 +154,7 @@ export default function Payment() {
   const { load } = useCart();
 
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false); 
 
   const [paymentId] = useState(
     "PAY" + Date.now() + Math.floor(Math.random() * 1000)
@@ -211,21 +181,21 @@ export default function Payment() {
       const r = await api.post("/orders", {
         shippingAddress,
         paymentMethod,
-
         paymentId:
-          paymentMethod === "ONLINE"
-            ? paymentId
-            : null,
+          paymentMethod === "ONLINE" ? paymentId : null,
       });
-
-      setSuccess(true);
 
       await load();
 
-      setTimeout(() => {
-        nav("/orders/" + r.data._id);
-      }, 1500);
+      if (paymentMethod === "ONLINE") {
+        setSuccess(true);
 
+        setTimeout(() => {
+          nav("/orders/" + r.data._id);
+        }, 1500);
+      } else {
+        nav("/orders/" + r.data._id);
+      }
     } catch (error) {
       alert(
         error.response?.data?.message ||
@@ -236,7 +206,8 @@ export default function Payment() {
     }
   };
 
-  if (success) {
+  // ONLINE PAYMENT SUCCESS ONLY
+  if (success && paymentMethod === "ONLINE") {
     return (
       <section className="payment-page">
         <div className="payment-card">
@@ -252,6 +223,7 @@ export default function Payment() {
     );
   }
 
+  // CASH ON DELIVERY
   if (paymentMethod === "COD") {
     return (
       <section className="payment-page">
@@ -260,7 +232,10 @@ export default function Payment() {
 
           <h2>Amount: ₹{total}</h2>
 
-          <p>You will pay when your order is delivered.</p>
+          <p>
+            You don't need to pay now. Payment will be collected
+            when your order is delivered.
+          </p>
 
           <button
             className="btn"
@@ -274,6 +249,7 @@ export default function Payment() {
     );
   }
 
+  // ONLINE PAYMENT
   return (
     <section className="payment-page">
       <div className="payment-card">

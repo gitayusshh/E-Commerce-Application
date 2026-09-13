@@ -16,7 +16,7 @@ export default function Products() {
     const n = new URLSearchParams(sp);
     if (v) n.set(k, v);
     else n.delete(k);
-    n.set("page", "1");
+    if (k !== "page") n.set("page", "1");
     setSp(n);
   };
   return (
