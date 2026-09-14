@@ -100,7 +100,7 @@ export default function Cart() {
       ) : (
         <>
           <div className="cart">
-            {cart.items.map((i) => (
+            {cart.items.filter((item) => item.product).map((i) => (
               <div className="cartrow" key={i.product._id}>
                 <img
                   src={i.product.image || "https://via.placeholder.com/100"}

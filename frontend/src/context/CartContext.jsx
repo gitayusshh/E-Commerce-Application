@@ -18,12 +18,14 @@ export const CartProvider = ({ children }) => {
     if (!user) return;
     setCart((await api.put("/cart", { productId, quantity })).data);
   };
-  const count = cart.items?.reduce((s, i) => s + i.quantity, 0) || 0;
+  const items = cart.items?.filter((item) => item.product) || [];
+  const count = items.reduce((s, i) => s + i.quantity, 0);
   const total =
-    cart.items?.reduce(
-      (s, i) => s + (i.product.discountPrice || i.product.price) * i.quantity,
+    items.reduce(
+      (s, i) =>
+        s + (i.product.discountPrice || i.product.price) * i.quantity,
       0,
-    ) || 0;
+    );
   return (
     <C.Provider value={{ cart, count, total, change, load }}>
       {children}

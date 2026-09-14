@@ -1,10 +1,20 @@
 import Cart from "../models/Cart.js";
 import Product from "../models/Product.js";
+
+const removeMissingProducts = async (cart) => {
+  await cart.populate("items.product");
+  const validItems = cart.items.filter((item) => item.product);
+  if (validItems.length !== cart.items.length) {
+    cart.items = validItems;
+    await cart.save();
+  }
+  return cart;
+};
+
 export const getCart = async (req, res, next) => {
   try {
-    const c = await Cart.findOne({ user: req.user._id }).populate(
-      "items.product",
-    );
+    const c = await Cart.findOne({ user: req.user._id });
+    if (c) await removeMissingProducts(c);
     res.json(c || { user: req.user._id, items: [] });
   } catch (e) {
     next(e);
@@ -27,7 +37,7 @@ export const updateCart = async (req, res, next) => {
         quantity: Math.min(quantity, p.stock),
       });
     await c.save();
-    res.json(await c.populate("items.product"));
+    res.json(await removeMissingProducts(c));
   } catch (e) {
     next(e);
   }
