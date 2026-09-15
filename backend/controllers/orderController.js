@@ -140,19 +140,3 @@ export const updateOrder = async (req, res, next) => {
   }
 };
 
-// export const updateOrder = async (req, res, next) => {
-//   try {
-//     const o = await Order.findByIdAndUpdate(
-//       req.params.id,
-//       {
-//         status: req.body.status,
-//         paymentStatus: req.body.paymentStatus,
-//       },
-//       { new: true }
-//     );
-
-//     res.json(o);
-//   } catch (e) {
-//     next(e);
-//   }
-// };

@@ -17,15 +17,17 @@ export const CartProvider = ({ children }) => {
   const change = async (productId, quantity) => {
     if (!user) return;
     setCart((await api.put("/cart", { productId, quantity })).data);
-  };
+  };  
   const items = cart.items?.filter((item) => item.product) || [];
   const count = items.reduce((s, i) => s + i.quantity, 0);
+
   const total =
     items.reduce(
       (s, i) =>
         s + (i.product.discountPrice || i.product.price) * i.quantity,
       0,
     );
+    
   return (
     <C.Provider value={{ cart, count, total, change, load }}>
       {children}
@@ -33,3 +35,4 @@ export const CartProvider = ({ children }) => {
   );
 };
 export const useCart = () => useContext(C);
+
